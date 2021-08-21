@@ -1,1 +1,2 @@
 # Helium
+The intial project was PacMan moving across the screen.  I modified the project slightly and included a Helium atom moving across the screen as a basic model of ideal gas law.  Future changes to this project would be adding a wall along the screen and modeling diffusion through the hole in the wall.  This would require changes to the check collision function along with creating an artificial wall.
