@@ -1,0 +1,68 @@
+<html>
+<SCRIPT>
+    var pos = 0;
+    var direction = 0;
+    const helium = [];
+    // Define global variables pos & direction
+    function setToRandom(scale) {
+        return {
+            x: Math.random() * scale,
+            y: Math.random() * scale
+        }
+    }
+    // Factory function to make Helium atoms
+    function makeHelium() {
+        
+        let velocity = setToRandom(5);
+        let position = setToRandom(500);
+        // Add image to div id = game
+        let game = document.getElementById('game');
+        let newimg = document.createElement('img');
+        newimg.style.position = 'absolute';
+        newimg.src = 'helium.png';
+        newimg.width = 150;
+        newimg.style.left = position.x;
+        newimg.style.top = position.y;
+        game.appendChild(newimg);
+        // new style of creating an object
+        return {
+            position,
+            velocity,
+            newimg
+        }
+    }
+
+    function update() {
+        //loop over helium atom array and move each one and move image in DOM
+        helium.forEach((item) => {
+            checkCollisions(item)
+            item.position.x += item.velocity.x;
+            item.position.y += item.velocity.y;
+
+            item.newimg.style.left = item.position.x;
+            item.newimg.style.top = item.position.y;
+        })
+        setTimeout(update, 20);
+    }
+//Check collisions with the wall and change direction
+    function checkCollisions(item) {
+        if (item.position.x + item.velocity.x + item.newimg.width > window.innerWidth ||
+            item.position.x + item.velocity.x < 0) item.velocity.x = -item.velocity.x;
+        if (item.position.y + item.velocity.y + item.newimg.height > window.innerHeight ||
+            item.position.y + item.velocity.y < 0) item.velocity.y = -item.velocity.y;
+    }
+
+    function makeOne() {
+        helium.push(makeHelium()); // add a new helium atom
+    }
+</SCRIPT>
+
+<body>
+    <div id='game'>
+        <button onclick='makeOne()' width='200' height='30'>Add Helium</button>
+        <button onclick='update()' width='200' height='30'>Increase Entropy</button>
+
+    </div>
+</body>
+
+</html>
